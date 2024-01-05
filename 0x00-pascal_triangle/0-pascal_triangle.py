@@ -3,7 +3,7 @@
 
 
 def pascal_triangle(n):
-    """Implementation of Pascal's Triangle"""	
+    """Implementation of Pascal's Triangle"""
     if n <= 0:
         return []
 
