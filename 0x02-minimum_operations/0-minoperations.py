@@ -9,7 +9,7 @@ def minOperations(n):
         return 0
     operations = 0
     num_char = 1
-    #clipboard = 0  # Initialize clip_board here
+    clipboard = 0  # Initialize clip_board here
 
     while n > num_char:
         if n >= num_char * 2:
