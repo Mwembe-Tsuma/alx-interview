@@ -1,25 +1,23 @@
 #!/usr/bin/python3
-"""Minimum operations needed to result in nH char is a file"""
+""" Minimum Operations needed to get n H characters """
 
 
-def minOperations(n):
-    """Implementation for the minOperations function"""
+def minOperations(n: int) -> int:
+    """ Implementation for the minOperations method """
+    paste_content = 'H'
+    current_content = 'H'
+    op_count = 0
 
-    if not isinstance(n, int):
+    while len(current_content) < n:
+        if n % len(current_content) == 0:
+            op_count += 2
+            paste_content = current_content
+            current_content += current_content
+        else:
+            op_count += 1
+            current_content += paste_content
+
+    if len(current_content) != n:
         return 0
-    operations = 0
-    num_char = 1
-    clipboard = 0  # Initialize clip_board here
 
-    while n > num_char:
-        if n >= num_char * 2:
-            clipboard = num_char
-            operations += 1
-        num_char += clipboard
-        operations += 1
-
-        if n > num_char:
-            num_char += clipboard
-            operations += 1
-
-    return operations
+    return op_count
