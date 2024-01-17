@@ -3,18 +3,23 @@
 
 
 def minOperations(n):
-    """Implementation for the minOperations method"""
-    if n <= 1:
+    """Implementation for the minOperations function"""
+
+    if not isinstance(n, int):
         return 0
-
     operations = 0
-    current = 1
-    clipboard = 0
+    num_char = 1
+    clipboard = 0  # Initialize clip_board here
 
-    while current < n:
-        if n % current == 0:
-            clipboard = current
-            operations += 2
-        current += clipboard
+    while n > num_char:
+        if n >= num_char * 2:
+            clipboard = num_char
+            operations += 1
+        num_char += clipboard
+        operations += 1
 
-    return operations // 2
+        if n > num_char:
+            num_char += clipboard
+            operations += 1
+
+    return operations
