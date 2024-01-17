@@ -17,4 +17,4 @@ def minOperations(n):
             operations += 2
         current += clipboard
 
-    return operations
+    return operations // 2
