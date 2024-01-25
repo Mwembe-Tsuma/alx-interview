@@ -21,7 +21,7 @@ if __name__ == '__main__':
         for line in sys.stdin:
             count += 1
             parts = line.split()
-            
+
             try:
                 status_code = parts[-2]
                 if status_code in stats:
