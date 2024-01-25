@@ -8,12 +8,14 @@ from collections import defaultdict
 
 
 def print_stats(total_size, status_counts):
+    """Printing the status"""
     print(f"File size: {total_size}")
     for status_code in sorted(status_counts):
         print(f"{status_code}: {status_counts[status_code]}")
 
 
 def main():
+    """Main file"""
     total_size = 0
     status_counts = defaultdict(int)
     line_count = 0
