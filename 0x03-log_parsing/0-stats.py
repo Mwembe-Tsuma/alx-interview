@@ -6,16 +6,12 @@ import sys
 import signal
 from collections import defaultdict
 
-
 def print_stats(total_size, status_counts):
-    """Printing the status"""
     print(f"File size: {total_size}")
     for status_code in sorted(status_counts):
         print(f"{status_code}: {status_counts[status_code]}")
 
-
 def main():
-    """Main file"""
     total_size = 0
     status_counts = defaultdict(int)
     line_count = 0
@@ -26,14 +22,13 @@ def main():
 
     signal.signal(signal.SIGINT, signal_handler)
 
-    for line in sys.stdin:
-        try:
+    try:
+        for line in sys.stdin:
             parts = line.split()
-            ip_address = parts[0]
-            status_code = int(parts[-2])
-            file_size = int(parts[-1])
-
-            if parts[5] == '"GET' and parts[6].startswith('/projects/260'):
+            if len(parts) == 10 and parts[5] == '"GET' and parts[6].startswith('/projects/260'):
+                status_code = int(parts[-2])
+                file_size = int(parts[-1])
+                
                 total_size += file_size
                 status_counts[status_code] += 1
                 line_count += 1
@@ -41,9 +36,5 @@ def main():
                 if line_count % 10 == 0:
                     print_stats(total_size, status_counts)
 
-        except (IndexError, ValueError):
-            pass
-
-
-if __name__ == "__main__":
-    main()
+    except KeyboardInterrupt:
+        signal_handler(signal.SIGINT, None)
