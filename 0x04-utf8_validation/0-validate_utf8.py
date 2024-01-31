@@ -6,25 +6,30 @@ UTF-8 Validation
 
 def validUTF8(data):
     """Determines if a given data set represents a valid UTF-8 encoding."""
-    bytes_to_follow = 0
+    def is_start_byte(byte):
+        return (byte & 0b10000000) == 0b00000000
 
-    for byte in data:
-        if bytes_to_follow == 0:
-            if (byte >> 7) == 0b0:
-                continue
-            elif (byte >> 5) == 0b110:
-                bytes_to_follow = 1
-            elif (byte >> 4) == 0b1110:
-                bytes_to_follow = 2
-            elif (byte >> 3) == 0b11110:
-                bytes_to_follow = 3
-            else:
-                return False
+    def is_following_byte(byte):
+        return (byte & 0b11000000) == 0b10000000
 
+    i = 0
+    while i < len(data):
+        current_byte = data[i]
+
+        if is_start_byte(current_byte):
+            num_bytes = 1
+            mask = 0b10000000
+            while (current_byte & mask):
+                num_bytes += 1
+                mask >>= 1
+
+            for j in range(1, num_bytes):
+                i += 1
+                if i >= len(data) or not is_following_byte(data[i]):
+                    return False
         else:
-            if (byte >> 6) == 0b10:
-                bytes_to_follow -= 1
-            else:
-                return False
+            return False
 
-    return bytes_to_follow == 0
+        i += 1
+
+    return True
