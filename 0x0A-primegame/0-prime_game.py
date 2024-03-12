@@ -3,7 +3,6 @@
 Prime Game implementation.
 """
 
-
 def is_prime(num):
     """
     Check if a number is prime.
@@ -14,7 +13,6 @@ def is_prime(num):
         if num % i == 0:
             return False
     return True
-
 
 def sieve_of_eratosthenes(limit):
     """
@@ -37,6 +35,29 @@ def sieve_of_eratosthenes(limit):
 
     return primes
 
+def play_round(n):
+    """
+    Play a round of the prime game.
+
+    Args:
+        n (int): Range for the round.
+
+    Returns:
+        int: 1 for Maria, 0 for Ben.
+    """
+    primes = sieve_of_eratosthenes(n)
+    moves = 0
+
+    while n > 1:
+        if is_prime(n):
+            moves += 1
+            n -= 1
+        else:
+            largest_prime = max(p for p in primes if p <= n)
+            moves += 1 + n // largest_prime
+            n = largest_prime - 1
+
+    return moves % 2
 
 def isWinner(x, nums):
     """
@@ -44,28 +65,12 @@ def isWinner(x, nums):
 
     Args:
         x (int): Number of rounds.
-        nums (list): List of integers.
+        nums (list): List of integers representing the range for each round.
 
     Returns:
         str or None: Name of the player that won the most rounds.
         None if the winner cannot be determined.
     """
-    def play_round(n):
-        """Function to determine winner"""
-        primes = sieve_of_eratosthenes(n)
-        moves = 0
-
-        while n > 1:
-            if is_prime(n):
-                moves += 1
-                n -= 1
-            else:
-                largest_prime = max(p for p in primes if p <= n)
-                moves += 1 + n // largest_prime
-                n = largest_prime - 1
-
-        return moves % 2
-
     maria_wins = 0
     ben_wins = 0
 
