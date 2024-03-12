@@ -3,6 +3,7 @@
 Utility functions for the prime game.
 """
 
+
 def is_prime(num):
     """
     Check if a number is prime.
@@ -13,6 +14,7 @@ def is_prime(num):
         if num % i == 0:
             return False
     return True
+
 
 def sieve_of_eratosthenes(limit):
     """

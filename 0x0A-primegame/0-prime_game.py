@@ -6,6 +6,7 @@ Prime Game implementation.
 from utils import sieve_of_eratosthenes
 from utils import is_prime
 
+
 def isWinner(x, nums):
     """
     Determine the winner of each game played x rounds.
