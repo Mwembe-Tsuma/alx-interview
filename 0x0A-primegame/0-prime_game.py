@@ -20,34 +20,30 @@ def isWinner(x, nums):
     ben_score = 0
     maria_score = 0
 
+    prime_flags = [1 for x in range(sorted(nums)[-1] + 1)]
+    prime_flags[0], prime_flags[1] = 0, 0
+    for i in range(2, len(prime_flags)):
+        remove_multiples(prime_flags, i)
     for i in nums:
-        prime_flags = [1] * (i + 1)
-
-        prime_flags[0], prime_flags[1] = 0, 0
-
-        for j in range(2, len(prime_flags)):
-            remove_multiples(prime_flags, j)
-
-        if sum(prime_flags) % 2 == 0:
+        if sum(prime_flags[0:i + 1]) % 2 == 0:
             ben_score += 1
         else:
             maria_score += 1
-
     if ben_score > maria_score:
         return "Ben"
-    elif maria_score > ben_score:
+    if maria_score > ben_score:
         return "Maria"
-    else:
-        return None
+    return None
 
 
-def remove_multiples(prime_flags, prime):
+def remove_multiples(list_primes, prime):
     """
     Removes multiples of a prime number from an array of possible prime
     numbers.
     """
-    for i in range(2, len(prime_flags)):
+    for i in range(2, len(list_primes)):
         try:
-            prime_flags[i * prime] = 0
-        except IndexError:
+            list_primes[i * prime] = 0
+        except (ValueError, IndexError):
+            break
             break
